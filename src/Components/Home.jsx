@@ -10,7 +10,7 @@ function Home() {
   const badWords = ["bad", "naughty", "horrible"];
 
   // state definition
-  const [possGood, setPossGood] = useState(0);
+  const [possGood, setPossGood] = useState(1);
   const [possBad, setPossBad] = useState(0);
   const [text, setText] = useState("");
 
@@ -47,15 +47,9 @@ function Home() {
     } else {
       setText(e.target.value);
     }
-
-    // if (text.split('').find("num")) {
-    //   setText(text);
-    // } else {
-    //   setText(e.target.value);
-    // }
   };
 
-  // this is going to break my mind
+  // breaking starts here
   const breaking = () => {
     setPossBad(0);
     setPossGood(0);
@@ -101,57 +95,94 @@ function Home() {
   if (face === "none") usedface = <NoExpressionAi />;
 
   return (
-    <div className="flex gap-48 items-center">
-      <div className="text-2xl">
-        {/* <Online> Hello there, wifi is open</Online>
-        <Offline>Wifi is gone</Offline> */}
-        <br />
-        Hello
-        <div>there is me</div>
-        <div className="mt-10">What face do you want me to wear?</div>
-        {/* text */}
-        <div className="flex">
-          <input
-            type="text"
-            name="text"
-            id="text"
-            className="border-2 "
-            value={text}
-            onChange={(e) => check(e)}
-          />
-
-          <button
-            type="submit"
-            className="bg-yellow-400 px-2 py-2 rounded-r-xl"
-            onClick={() => breaking()}
-          >
-            Enter
-          </button>
-        </div>
-        {/* button */}
-        <div className="flex gap-10 mt-4">
-          <button
-            className="bg-green-400 px-10 py-2 rounded-full hover:bg-green-800 hover:text-white transition-all duration-300"
-            onClick={() => setFace("happy")}
-          >
-            Happy
-          </button>
-          <button
-            className="bg-green-400 px-10 py-2 rounded-full hover:bg-green-800 hover:text-white transition-all duration-300"
-            onClick={() => setFace("sad")}
-          >
-            Sad
-          </button>
-          <button
-            className="bg-green-400 px-10 py-2 rounded-full hover:bg-green-800 hover:text-white transition-all duration-300"
-            onClick={() => setFace("none")}
-          >
-            None
-          </button>
-        </div>
+    <div className="w-screen h-screen bg-primary">
+      {/* title */}
+      <div className="text-7xl text-secondary text-center mt-10">
+        Happy <span className="text-2xl">AI</span>
       </div>
-      <div> {usedface}</div>
+
+      {/* text area and face */}
+      <div></div>
+      <div className="flex w-screen justify-evenly items-center px-10 mt-10">
+        {/* text area */}
+
+        <div className="w-[30rem] h-[35rem] border-2 border-black rounded-xl relative">
+          {/* input button */}
+          <div className="flex absolute items-center top-[31rem]">
+            <input
+              type="text"
+              name="text"
+              id="text"
+              className="border-2 w-[22rem] ml-4 px-5 py-2 text-xl rounded-l-xl bg-transparent border-black"
+              value={text}
+              onChange={(e) => check(e)}
+            />
+
+            <button
+              type="submit"
+              className="bg-secondary text-xl w-[5rem] px-2 py-2 rounded-r-xl"
+              onClick={() => breaking()}
+            >
+              Enter
+            </button>
+          </div>
+        </div>
+
+        {/* face */}
+        <div>{usedface}</div>
+      </div>
     </div>
+    // <div className="flex gap-48 items-center bg-red-100">
+    //   <div className="text-2xl">
+    //     {/* <Online> Hello there, wifi is open</Online>
+    //     <Offline>Wifi is gone</Offline> */}
+    //     <br />
+    //     Hello
+    //     <div>there is me</div>
+    //     <div className="mt-10">What face do you want me to wear?</div>
+    //     {/* text */}
+    //     <div className="flex">
+    //       <input
+    //         type="text"
+    //         name="text"
+    //         id="text"
+    //         className="border-2 "
+    //         value={text}
+    //         onChange={(e) => check(e)}
+    //       />
+
+    //       <button
+    //         type="submit"
+    //         className="bg-yellow-400 px-2 py-2 rounded-r-xl"
+    //         onClick={() => breaking()}
+    //       >
+    //         Enter
+    //       </button>
+    //     </div>
+    //     {/* button */}
+    //     {/* <div className="flex gap-10 mt-4">
+    //       <button
+    //         className="bg-green-400 px-10 py-2 rounded-full hover:bg-green-800 hover:text-white transition-all duration-300"
+    //         onClick={() => setFace("happy")}
+    //       >
+    //         Happy
+    //       </button>
+    //       <button
+    //         className="bg-green-400 px-10 py-2 rounded-full hover:bg-green-800 hover:text-white transition-all duration-300"
+    //         onClick={() => setFace("sad")}
+    //       >
+    //         Sad
+    //       </button>
+    //       <button
+    //         className="bg-green-400 px-10 py-2 rounded-full hover:bg-green-800 hover:text-white transition-all duration-300"
+    //         onClick={() => setFace("none")}
+    //       >
+    //         None
+    //       </button>
+    //     </div> */}
+    //   </div>
+    //   <div> {usedface}</div>
+    // </div>
   );
 }
 
