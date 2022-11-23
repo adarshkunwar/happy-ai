@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 // import { Online, Offline } from "react-detect-offline";
 import HappyFaceAi from "./Faces/HappyFaceAi";
 import NoExpressionAi from "./Faces/NoExpressionAi";
@@ -9,8 +9,11 @@ function Home() {
   const goodWords = ["good", "sweet", "happy"];
   const badWords = ["bad", "naughty", "horrible"];
 
+  const inputRef = useRef(null);
+
   // state definition
-  const [possGood, setPossGood] = useState(1);
+  const [chatMessages, setChatMessages] = useState([]);
+  const [possGood, setPossGood] = useState(2);
   const [possBad, setPossBad] = useState(0);
   const [text, setText] = useState("");
 
@@ -20,20 +23,24 @@ function Home() {
     console.log("possGood: " + possGood);
   }, [possBad, possGood]);
 
-  useEffect(() => {
-    console.log("possbad :" + possBad);
-    console.log("possGood: " + possGood);
-  }, [possGood, possBad]);
+  // useEffect(() => {
+  //   console.log("possbad :" + possBad);
+  //   console.log("possGood: " + possGood);
+  // }, [possGood, possBad]);
 
   useEffect(() => {
     if (possGood > possBad) {
-      console.log("good:" + possGood);
+      // console.log("good:" + possGood);
       setFace("happy");
     } else {
-      console.log("bad: " + possBad);
+      // console.log("bad: " + possBad);
       setFace("sad");
     }
   }, [possGood, possBad]);
+
+  useEffect(() => {
+    console.log("This is chat messages", chatMessages);
+  }, [chatMessages]);
 
   // checking for . mark
   const check = (e) => {
@@ -51,12 +58,12 @@ function Home() {
 
   // breaking starts here
   const breaking = () => {
+    // console.log(inputRef.current.value, "This is input tag ko value.");
     setPossBad(0);
     setPossGood(0);
     let text1 = document.getElementById("text").value;
-
     const words = text1.split(" ");
-    console.log(words);
+    // console.log(words);
 
     for (let i = 0; i < words.length; i++) {
       for (let j = 0; j < badWords.length; j++) {
@@ -90,6 +97,33 @@ function Home() {
   const [face, setFace] = useState("happy");
   let usedface;
 
+  const [botMessages, setBotMessages] = useState("Hello, how are you! ");
+
+  useEffect(() => {
+    console.log(face)
+    if (face === "happy") {
+      // console.log("happy was called.");
+      setBotMessages(happyText);
+      // setChatMessages((prev) => [...prev, happyText]);
+    } else if (face === "sad") {
+      console.log("sad was caleled.");
+      setBotMessages(sadText);
+      // setChatMessages((prev) => [...prev, sadText]);
+    }
+  }, [face]);
+
+  useEffect(() => {
+    // setChatMessages((prev) => [...prev, text1]);
+    // let initialText = inputRef.current.value !== "" && inputRef.current.value
+    if(!inputRef.current.value) {
+      setChatMessages((prev) => [...prev, inputRef.current.value, botMessages]);
+    }
+    
+  }, [botMessages]);
+
+  const happyText = "Aww you are so sweet";
+  const sadText = "You sadist!!";
+
   if (face === "happy") usedface = <HappyFaceAi />;
   if (face === "sad") usedface = <SadFaceAi />;
   if (face === "none") usedface = <NoExpressionAi />;
@@ -110,6 +144,7 @@ function Home() {
           {/* input button */}
           <div className="flex absolute items-center top-[31rem]">
             <input
+              ref={inputRef}
               type="text"
               name="text"
               id="text"
